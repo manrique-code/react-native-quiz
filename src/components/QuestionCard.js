@@ -20,7 +20,22 @@ const QuestionCard = ({
             </Text>
             <View>
                 {answers.map((answer) => (
-                    <TouchableOpacity key={answer} style={Styles.answerButton}>
+                    <TouchableOpacity
+                        key={answer}
+                        style={
+                            userAnswer
+                                ? userAnswer === answer && answer === correctAnswer
+                                    ? Styles.correctAnswer
+                                    : answer === correctAnswer
+                                        ? Styles.correctAnswer
+                                        : Styles.incorrectAnswer
+                                : Styles.answerButton
+                        }
+                        onPress={() => {
+                            callBack(answer)
+                        }}
+                        disabled={userAnswer ? true : false}
+                    >
                         <Text style={Styles.answerButtonText}>{answer}</Text>
                     </TouchableOpacity>
                 ))}
@@ -61,6 +76,22 @@ const Styles = StyleSheet.create({
     answerButtonText: {
         fontSize: 18,
         color: "#fff"
+    },
+    correctAnswer: {
+        textAlign: "center",
+        padding: 15,
+        borderWidth: 3,
+        borderColor: "#06d6a0",
+        borderRadius: 20,
+        marginBottom: 5
+    },
+    incorrectAnswer: {
+        textAlign: "center",
+        padding: 15,
+        borderWidth: 3,
+        borderColor: "#ef476f",
+        borderRadius: 20,
+        marginBottom: 5
     }
 });
 
